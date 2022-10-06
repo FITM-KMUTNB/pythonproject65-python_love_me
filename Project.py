@@ -53,5 +53,4 @@ def delete_letter(i):
     del ON_SCREEN_LETTERS[i]
     add_letter()
 
-
 pgzrun.go()
