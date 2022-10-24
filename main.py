@@ -20,10 +20,10 @@ quit_img = pygame.image.load("images/quit.png").convert_alpha()
 restart_img = pygame.image.load('images/restart.png').convert_alpha()
 home_img = pygame.image.load('images/home.png').convert_alpha()
 
-start_button = button.Button(295, 175, start_img, 0.33)
+start_button = button.Button(295, 150, start_img, 0.33)
 tutorail_button = button.Button(295, 250, tutorail_img, 0.33)
-scoreboard_button = button.Button(295, 325, scoreboard_img, 0.33)
-quit_button = button.Button(295, 400, quit_img, 0.33)
+scoreboard_button = button.Button(295, 350, scoreboard_img, 0.33)
+quit_button = button.Button(295, 450, quit_img, 0.33)
 restart_button = button.Button(295, 250, restart_img, 0.33)
 home_button = button.Button(295, 325, home_img, 0.33)
 
@@ -49,36 +49,37 @@ def is_word_on_screen(words_on_screen,word):
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
-run = True
-while run:
-    if menu_state == "start":
+def fuc_start():
+        global menu_state
+        global run
         pygame.init()
         display_surface = pygame.display.set_mode((800, 500))
-        pygame.display.set_caption("Start menu")
-        startrun = True
+        pygame.display.set_caption("Start Menu")
+        endrun = True
         display_surface.fill((255,255,255))
-        while startrun:
+        while endrun:
+            render_text(display_surface,font1,"Typing Game",(0,0,0),(275,35))
             if start_button.draw(screen):
                 menu_state = 'game'
-                startrun = False
+                endrun = False
             if tutorail_button.draw(screen):
                 menu_state = "tutorail"
-                startrun = False
+                endrun = False
             if scoreboard_button.draw(screen):
-                menu_state = 'scoreboard'
-                startrun = False
-            if quit_button.draw(screen):
-                run = False
+                menu_state = "tutorail"
+                endrun = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-                    startrun = False
+                    endrun = False
             pygame.display.update()
-    if menu_state == "game":
+def fuc_game():
+        global run
+        global menu_state
         lines_read = load_words_file("english_words.txt")# load words from the file
         pygame.init()
         display_surface = pygame.display.set_mode((800, 500))
-        pygame.display.set_caption("Typing game")
+        pygame.display.set_caption("Typing Game")
         ended = False
         words_on_screen = []
         font = pygame.font.Font("freesansbold.ttf", 32)
@@ -131,14 +132,12 @@ while run:
                 render_text(display_surface,font,'Score:',(0,0,0),(640,25))
             pygame.display.update()
             clock.tick(60)
-    if menu_state == "tutorail":
-        pass
-    if menu_state == 'scoreboard':
-        pass
-    if menu_state == 'end':
+def fuc_end():
+        global menu_state
+        global run
         pygame.init()
         display_surface = pygame.display.set_mode((800, 500))
-        pygame.display.set_caption("End menu")
+        pygame.display.set_caption("End Menu")
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
@@ -155,6 +154,18 @@ while run:
                     run = False
                     endrun = False
             pygame.display.update()
+run = True
+while run:
+    if menu_state == "start":
+        fuc_start()
+    if menu_state == "game":
+        fuc_game()
+    if menu_state == "tutorail":
+        pass
+    if menu_state == 'scoreboard':
+        pass
+    if menu_state == 'end':
+        fuc_end()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
