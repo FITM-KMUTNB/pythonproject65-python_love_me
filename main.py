@@ -137,7 +137,7 @@ def fuc_game():
                 render_text(display_surface,font,'Score:',(0,0,0),(640,25))
             if posi_y >= 370:
                 posi_y = 60
-            posi_y += 80
+            posi_y += 40
             pygame.display.update()
             clock.tick(60)
 def fuc_end():
