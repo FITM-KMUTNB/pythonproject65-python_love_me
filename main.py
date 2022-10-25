@@ -39,9 +39,8 @@ def load_words_file(filename):
 def render_text(display_surface, font, text_content, color, position):
     text = font.render(text_content, True, color)
     display_surface.blit(text, position)
-def release_wave(count,lines_read,words_on_screen):#count : how many words will be spawned
+def release_wave(count,lines_read,words_on_screen,random_y):#count : how many words will be spawned
     for i in range(count):
-        random_y = random.randint(50, 450)
         randomed = random.randrange(0,len(lines_read)) 
         randomed_word = lines_read[randomed].replace("\n","")
         words_on_screen.append({"word": randomed_word,"coordinate": (0,random_y)})
@@ -96,6 +95,7 @@ def fuc_game():
         success_count = 0
         rungame = True
         pytime = pygame.time.get_ticks()/1000
+        posi_y = 60
         while rungame:
             countdown_timer = (60+pytime) - (pygame.time.get_ticks() / 1000)
             if float(countdown_timer) <= 0.00:#end game
@@ -107,7 +107,7 @@ def fuc_game():
                 display_surface.fill((255,255,255))
                 if(pygame.time.get_ticks()-word_spawn_timer > 700):
                     word_spawn_timer = pygame.time.get_ticks()
-                    release_wave(1,lines_read,words_on_screen)
+                    release_wave(1,lines_read,words_on_screen,posi_y)
                 for word_info in words_on_screen:
                     word_info["coordinate"] = (word_info["coordinate"][0] + dx,word_info["coordinate"][1])
                     render_text(display_surface,font,word_info["word"],(0,0,0),word_info["coordinate"])
@@ -135,6 +135,9 @@ def fuc_game():
                 render_text(display_surface,font,str('%.2f'%(countdown_timer)),(0,0,0),(675,450))
                 render_text(display_surface,font,str('%d'%(success_count)),(0,0,0),(750,27))
                 render_text(display_surface,font,'Score:',(0,0,0),(640,25))
+            if posi_y >= 370:
+                posi_y = 60
+            posi_y += 80
             pygame.display.update()
             clock.tick(60)
 def fuc_end():
