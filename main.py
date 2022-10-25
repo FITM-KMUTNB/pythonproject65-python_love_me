@@ -10,6 +10,7 @@ pygame.display.set_caption("Main Menu")
 menu_state = "start"
 font1 = pygame.font.Font("freesansbold.ttf", 48)
 font2 = pygame.font.Font("freesansbold.ttf", 32)
+font3 = pygame.font.Font("freesansbold.ttf", 24)
 TEXT_COL = (0, 0, 0)
 success_count = 0
 
@@ -19,13 +20,16 @@ scoreboard_img = pygame.image.load('images/scoreboard.png').convert_alpha()
 quit_img = pygame.image.load("images/quit.png").convert_alpha()
 restart_img = pygame.image.load('images/restart.png').convert_alpha()
 home_img = pygame.image.load('images/home.png').convert_alpha()
+bg_img = pygame.image.load('images/back_ground.png')
+bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
-start_button = button.Button(295, 150, start_img, 0.33)
-tutorail_button = button.Button(295, 250, tutorail_img, 0.33)
-scoreboard_button = button.Button(295, 350, scoreboard_img, 0.33)
+start_button = button.Button(75, 150, start_img, 0.3)
+tutorail_button = button.Button(75, 250, tutorail_img, 0.3)
+scoreboard_button = button.Button(75, 350, scoreboard_img, 0.3)
 quit_button = button.Button(295, 450, quit_img, 0.33)
 restart_button = button.Button(295, 250, restart_img, 0.33)
 home_button = button.Button(295, 325, home_img, 0.33)
+home2_button = button.Button(350,425, home_img, 0.33)
 
 def load_words_file(filename):
     word_file = open(filename, "r")
@@ -58,7 +62,8 @@ def fuc_start():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
-            render_text(display_surface,font1,"Typing Game",(0,0,0),(275,35))
+            screen.blit(bg_img,(0,0))
+            render_text(display_surface,font1,"Typing Game",(0,0,0),(75,35))
             if start_button.draw(screen):
                 menu_state = 'game'
                 endrun = False
@@ -66,7 +71,7 @@ def fuc_start():
                 menu_state = "tutorail"
                 endrun = False
             if scoreboard_button.draw(screen):
-                menu_state = "tutorail"
+                menu_state = "scoreboard"
                 endrun = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -92,7 +97,7 @@ def fuc_game():
         rungame = True
         pytime = pygame.time.get_ticks()/1000
         while rungame:
-            countdown_timer = (5+pytime) - (pygame.time.get_ticks() / 1000)
+            countdown_timer = (60+pytime) - (pygame.time.get_ticks() / 1000)
             if float(countdown_timer) <= 0.00:#end game
                 display_surface.fill((255,255,255))
                 menu_state = 'end'
@@ -154,6 +159,75 @@ def fuc_end():
                     run = False
                     endrun = False
             pygame.display.update()
+dic = {}
+dicbod = {}
+hilow = [0,1,2,3,4,5,6,7,8,9,10,
+        11,12,13,14,15,16,17,18,
+        19,20,21,22,23,24,25,26,
+        27,28,29,30,31,32,33,34,
+        35,36,37,38,39,40,41,42,
+        43,44,45,46,47,48,49,50]
+username = 'Test'
+userscore = '11'
+def write():
+    read()
+    filew = open('diction.txt','w')
+    for name,score in dic.items():
+        filew.write(name)
+        filew.write(' ')
+        filew.write(score+'\n')
+    filew.close()
+def read():
+    filer = open('diction.txt','r')
+    line = filer.readline().rstrip('\n')
+    while line != '':
+        name,score = line.split()
+        dic[name] = score
+        line = filer.readline().rstrip('\n')
+    filer.close()
+def updic():
+    dic[username] = userscore
+def save():
+    read()
+    updic()
+    write()
+def scoreboard():
+    read()
+    nhilow = len(hilow)
+    nhilow = nhilow - 1
+    while nhilow >= 0: 
+        for name, score in dic.items():
+            score = int(score)
+            if score == hilow[nhilow]:
+                dicbod[name] = score
+        nhilow -= 1
+def fuc_scoreboard():
+        scoreboard()
+        global menu_state
+        global run
+        pygame.init()
+        display_surface = pygame.display.set_mode((800, 500))
+        pygame.display.set_caption("End Menu")
+        endrun = True
+        display_surface.fill((255,255,255))
+        while endrun:
+            render_text(display_surface,font1,"Scoreboard",(0,0,0),(300,35))
+            render_text(display_surface,font2,"Ranking",(0,0,0),(50, 85))
+            render_text(display_surface,font2,"Username",(0,0,0),(350, 85))
+            render_text(display_surface,font2,"Score",(0,0,0),(650, 85))
+            for rank in range(10):
+                rank = str(rank + 1)
+                render_text(display_surface,font3,rank,(0,0,0),(115, 85+int(rank)*32))
+            #for name,score in dicbod.items():
+
+            if home2_button.draw(screen):
+                menu_state = "start"
+                endrun = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    endrun = False
+            pygame.display.update()
 run = True
 while run:
     if menu_state == "start":
@@ -163,7 +237,7 @@ while run:
     if menu_state == "tutorail":
         pass
     if menu_state == 'scoreboard':
-        pass
+        fuc_scoreboard()
     if menu_state == 'end':
         fuc_end()
     for event in pygame.event.get():
