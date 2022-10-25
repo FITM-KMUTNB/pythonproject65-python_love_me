@@ -214,9 +214,9 @@ def fuc_scoreboard():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
-            render_text(display_surface,font1,"Scoreboard",(0,0,0),(300,25))
+            render_text(display_surface,font1,"Scoreboard",(0,0,0),(280,25))
             render_text(display_surface,font2,"Ranking",(0,0,0),(50, 85))
-            render_text(display_surface,font2,"Username",(0,0,0),(350, 85))
+            render_text(display_surface,font2,"Username",(0,0,0),(325, 85))
             render_text(display_surface,font2,"Score",(0,0,0),(650, 85))
             for rank in range(10):
                 rank = str(rank + 1)
@@ -225,7 +225,7 @@ def fuc_scoreboard():
             for name,score in dicbod.items():
                 score = str(score)
                 render_text(display_surface,font3,name,(0,0,0),(350, 85+int(j)*32))
-                render_text(display_surface,font3,score,(0,0,0),(650, 85+int(j)*32))
+                render_text(display_surface,font3,score,(0,0,0),(675, 85+int(j)*32))
                 j += 1
             if home2_button.draw(screen):
                 menu_state = "start"
