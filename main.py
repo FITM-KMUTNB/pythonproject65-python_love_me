@@ -228,6 +228,33 @@ def fuc_scoreboard():
                     run = False
                     endrun = False
             pygame.display.update()
+def fuc_tutorial():
+        scoreboard()
+        global menu_state
+        global run
+        pygame.init()
+        display_surface = pygame.display.set_mode((800, 500))
+        pygame.display.set_caption("End Menu")
+        endrun = True
+        display_surface.fill((255,255,255))
+        while endrun:
+            render_text(display_surface,font1,"Scoreboard",(0,0,0),(300,35))
+            render_text(display_surface,font2,"Ranking",(0,0,0),(50, 85))
+            render_text(display_surface,font2,"Username",(0,0,0),(350, 85))
+            render_text(display_surface,font2,"Score",(0,0,0),(650, 85))
+            for rank in range(10):
+                rank = str(rank + 1)
+                render_text(display_surface,font3,rank,(0,0,0),(115, 85+int(rank)*32))
+            #for name,score in dicbod.items():
+
+            if home2_button.draw(screen):
+                menu_state = "start"
+                endrun = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    endrun = False
+            pygame.display.update()
 run = True
 while run:
     if menu_state == "start":
@@ -235,7 +262,7 @@ while run:
     if menu_state == "game":
         fuc_game()
     if menu_state == "tutorail":
-        pass
+        fuc_tutorial()
     if menu_state == 'scoreboard':
         fuc_scoreboard()
     if menu_state == 'end':
