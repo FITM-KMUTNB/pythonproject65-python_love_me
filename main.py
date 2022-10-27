@@ -158,12 +158,12 @@ def fuc_game():
                                 typing_buffer.append(pygame.key.name(event.key))
                         current_text = "".join(typing_buffer)
                 render_text(display_surface,font,current_text,(0,0,0),(20,450))
-                render_text(display_surface,font,str('%.2f'%(countdown_timer)),(0,0,0),(700,450))
+                render_text(display_surface,font,str('%.2f'%(countdown_timer)),(0,0,0),(700,460))
                 render_text(display_surface,font,str('%d'%(success_count)),(0,0,0),(750,27))
                 render_text(display_surface,font,username,(0,0,0),(230,25))
                 render_text(display_surface,font,'Score:',(0,0,0),(640,25))
                 render_text(display_surface,font,'Username:',(0,0,0),(40,25))
-                render_text(display_surface,font,'Time:',(0,0,0),(600,450))
+                render_text(display_surface,font,'Time:',(0,0,0),(600,460))
                 if posi_y >= 450:
                     posi_y = 60
             pygame.display.update()
