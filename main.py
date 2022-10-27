@@ -33,9 +33,10 @@ bg3_img = pygame.transform.scale(bg3_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 start_button = button.Button(75, 150, start_img, 0.3)
 tutorail_button = button.Button(75, 250, tutorail_img, 0.3)
 scoreboard_button = button.Button(75, 350, scoreboard_img, 0.3)
-restart_button = button.Button(295, 250, restart_img, 0.33)
+restart_button = button.Button(190, 250, restart_img, 0.33)
 home_button = button.Button(295, 325, home_img, 0.33)
 home2_button = button.Button(350,425, home_img, 0.33)
+home3_button = button.Button(420,250, home_img, 0.33)
 
 success_count = 0
 wrong_count = 0
@@ -183,7 +184,7 @@ def fuc_end():
             if restart_button.draw(screen):
                 menu_state = 'game'
                 endrun = False
-            if home_button.draw(screen):
+            if home3_button.draw(screen):
                 menu_state = "start"
                 endrun = False
             for event in pygame.event.get():
