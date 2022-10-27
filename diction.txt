@@ -1,4 +1,4 @@
-Owen 50
+Owen 100
 Do 9
 Net 9
 Miw 8
@@ -15,3 +15,4 @@ POND 30
 Mr.kingowen 17
 SKIZZTV 27
 WEEB 36
+Nongnuea 29

@@ -207,7 +207,8 @@ hilow = [0,1,2,3,4,5,6,7,8,9,10,
         75,76,77,78,79,80,81,82,
         83,84,85,86,87,88,89,90,
         91,92,93,94,95,96,97,98,
-        99,100]
+        99,100,101,102,103,104,105,
+        106]
 def write():
     filew = open('diction.txt','w')
     for name,score in dic.items():
@@ -275,6 +276,8 @@ def fuc_scoreboard():
                 score = str(score)
                 render_text(display_surface,font3,name,(0,0,0),(350, 75+int(j)*32))
                 render_text(display_surface,font3,score,(0,0,0),(675, 75+int(j)*32))
+                if j == 10:
+                    break
                 j += 1
             if home2_button.draw(screen):
                 menu_state = "start"
