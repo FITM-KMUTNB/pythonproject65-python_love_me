@@ -1,11 +1,11 @@
-Owen 10
+Owen 50
 Do 9
 Net 9
 Miw 8
 Earn 9
 Anirach 15
-test1 2
-test2 2
-test 0
-user 0
-t 0
+Aektawan 29
+a 0
+b 12
+c 4
+d 3
