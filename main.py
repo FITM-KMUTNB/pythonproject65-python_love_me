@@ -230,11 +230,15 @@ def scoreboard():
     read()
     nhilow = len(hilow)
     nhilow = nhilow - 1
+    count = 0
     while nhilow >= 0: 
         for name, score in dic.items():
             score = int(score)
             if score == hilow[nhilow]:
                 dicbod[name] = score
+                count += 1
+        if count == 10:
+            break
         nhilow -= 1
 def fuc_scoreboard():
         scoreboard()
