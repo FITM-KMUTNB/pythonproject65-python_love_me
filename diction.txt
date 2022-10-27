@@ -12,3 +12,6 @@ d 3
 test 0
 tesu 0
 POND 30
+Mr.kingowen 17
+SKIZZTV 27
+WEEB 36
