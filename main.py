@@ -133,6 +133,7 @@ def fuc_game():
                 if(pygame.time.get_ticks()-word_spawn_timer > 700):
                     word_spawn_timer = pygame.time.get_ticks()
                     release_wave(1,lines_read,words_on_screen,posi_y)
+                    posi_y += 60
                 for word_info in words_on_screen:
                     word_info["coordinate"] = (word_info["coordinate"][0] + dx,word_info["coordinate"][1])
                     render_text(display_surface,font,word_info["word"],(0,0,0),word_info["coordinate"])
@@ -163,9 +164,8 @@ def fuc_game():
                 render_text(display_surface,font,'Score:',(0,0,0),(640,25))
                 render_text(display_surface,font,'Username:',(0,0,0),(40,25))
                 render_text(display_surface,font,'Time:',(0,0,0),(600,450))
-            if posi_y >= 370:
-                posi_y = 60
-            posi_y += 40
+                if posi_y >= 450:
+                    posi_y = 60
             pygame.display.update()
             clock.tick(60)
         save()

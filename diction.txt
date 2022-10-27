@@ -10,3 +10,4 @@ b 12
 c 4
 d 3
 test 0
+tesu 0
