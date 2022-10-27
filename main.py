@@ -1,19 +1,21 @@
 import pygame
 import random
 import button
+import pygame_gui
 pygame.init()
 clock = pygame.time.Clock()
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Main Menu")
+MANAGER = pygame_gui.UIManager((SCREEN_WIDTH,SCREEN_HEIGHT))
 menu_state = "start"
 font1 = pygame.font.Font("freesansbold.ttf", 48)
 font2 = pygame.font.Font("freesansbold.ttf", 32)
 font3 = pygame.font.Font("freesansbold.ttf", 24)
+font35 = font3 = pygame.font.Font("freesansbold.ttf", 22)
+font4 = pygame.font.Font("freesansbold.ttf", 18)
 TEXT_COL = (0, 0, 0)
-success_count = 0
-
+userinput = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((500,160),(300,50)),manager = MANAGER,object_id ='#username')
 start_img = pygame.image.load("images/start.png").convert_alpha()
 tutorail_img = pygame.image.load("images/tutorail.png").convert_alpha()
 scoreboard_img = pygame.image.load('images/scoreboard.png').convert_alpha()
@@ -31,6 +33,14 @@ restart_button = button.Button(295, 250, restart_img, 0.33)
 home_button = button.Button(295, 325, home_img, 0.33)
 home2_button = button.Button(350,425, home_img, 0.33)
 
+success_count = 0
+wrong_count = 0
+username = ''
+score = 0
+
+def get_user(userna):
+    global username
+    username = userna
 def load_words_file(filename):
     word_file = open(filename, "r")
     lines_read = word_file.readlines()
@@ -61,11 +71,14 @@ def fuc_start():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
+            UI_REFRESH_RATE = clock.tick(60)/1000
             screen.blit(bg_img,(0,0))
             render_text(display_surface,font1,"Typing Game",(0,0,0),(75,35))
+            render_text(display_surface,font4,"Enter username and press Enter",(0,0,0),(505,140))
             if start_button.draw(screen):
-                menu_state = 'game'
-                endrun = False
+                if username != '':
+                    menu_state = 'game'
+                    endrun = False
             if tutorail_button.draw(screen):
                 menu_state = "tutorail"
                 endrun = False
@@ -76,10 +89,17 @@ def fuc_start():
                 if event.type == pygame.QUIT:
                     run = False
                     endrun = False
+                if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == '#username':
+                    get_user(event.text)
+                MANAGER.process_events(event)
+            MANAGER.update(UI_REFRESH_RATE)
+            MANAGER.draw_ui(screen)
             pygame.display.update()
 def fuc_game():
         global run
         global menu_state
+        global success_count
+        global wrong_count
         lines_read = load_words_file("english_words.txt")# load words from the file
         pygame.init()
         display_surface = pygame.display.set_mode((800, 500))
@@ -97,7 +117,7 @@ def fuc_game():
         pytime = pygame.time.get_ticks()/1000
         posi_y = 60
         while rungame:
-            countdown_timer = (60+pytime) - (pygame.time.get_ticks() / 1000)
+            countdown_timer = (40+pytime) - (pygame.time.get_ticks() / 1000)
             if float(countdown_timer) <= 0.00:#end game
                 display_surface.fill((255,255,255))
                 menu_state = 'end'
@@ -122,7 +142,7 @@ def fuc_game():
                                 words_on_screen.pop(index_found)
                                 success_count += 1
                             else:
-                                print("wrong")
+                                wrong_count += 1
                             typing_buffer = []
                         else:
                             if pygame.key.name(event.key) == "backspace": #if backspace then delete last element of typing buffer
@@ -132,14 +152,18 @@ def fuc_game():
                                 typing_buffer.append(pygame.key.name(event.key))
                         current_text = "".join(typing_buffer)
                 render_text(display_surface,font,current_text,(0,0,0),(20,450))
-                render_text(display_surface,font,str('%.2f'%(countdown_timer)),(0,0,0),(675,450))
+                render_text(display_surface,font,str('%.2f'%(countdown_timer)),(0,0,0),(700,450))
                 render_text(display_surface,font,str('%d'%(success_count)),(0,0,0),(750,27))
+                render_text(display_surface,font,username,(0,0,0),(230,25))
                 render_text(display_surface,font,'Score:',(0,0,0),(640,25))
+                render_text(display_surface,font,'Username:',(0,0,0),(40,25))
+                render_text(display_surface,font,'Time:',(0,0,0),(600,450))
             if posi_y >= 370:
                 posi_y = 60
             posi_y += 40
             pygame.display.update()
             clock.tick(60)
+        save()
 def fuc_end():
         global menu_state
         global run
@@ -149,8 +173,10 @@ def fuc_end():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
+            screen.blit(bg_img,(0,0))
             render_text(display_surface,font1,"Game Over.",(0,0,0),(275,35))
             render_text(display_surface,font2," Score :  {0} word per minute".format(success_count),(0,0,0),(175,125))
+            render_text(display_surface,font2," Wrong :  {0} word".format(wrong_count),(0,0,0),(175,170))
             if restart_button.draw(screen):
                 menu_state = 'game'
                 endrun = False
@@ -170,15 +196,14 @@ hilow = [0,1,2,3,4,5,6,7,8,9,10,
         27,28,29,30,31,32,33,34,
         35,36,37,38,39,40,41,42,
         43,44,45,46,47,48,49,50]
-username = 'Test'
-userscore = '11'
 def write():
-    read()
     filew = open('diction.txt','w')
     for name,score in dic.items():
+        score = str(score)
         filew.write(name)
         filew.write(' ')
-        filew.write(score+'\n')
+        filew.write(score)
+        filew.write('\n')
     filew.close()
 def read():
     filer = open('diction.txt','r')
@@ -189,7 +214,14 @@ def read():
         line = filer.readline().rstrip('\n')
     filer.close()
 def updic():
-    dic[username] = userscore
+    if username in dic.keys():
+        if success_count >= int(dic[username]):
+            dic[username] = success_count
+    if username not in dic.keys():
+        dic[username] = success_count
+    else:
+        pass
+
 def save():
     read()
     updic()
@@ -214,18 +246,19 @@ def fuc_scoreboard():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
-            render_text(display_surface,font1,"Scoreboard",(0,0,0),(280,25))
-            render_text(display_surface,font2,"Ranking",(0,0,0),(50, 85))
-            render_text(display_surface,font2,"Username",(0,0,0),(325, 85))
-            render_text(display_surface,font2,"Score",(0,0,0),(650, 85))
+            screen.blit(bg_img,(0,0))
+            render_text(display_surface,font1,"Scoreboard",(0,0,0),(290,15))
+            render_text(display_surface,font2,"Ranking",(0,0,0),(50, 75))
+            render_text(display_surface,font2,"Username",(0,0,0),(325, 75))
+            render_text(display_surface,font2,"Score",(0,0,0),(650, 75))
             for rank in range(10):
                 rank = str(rank + 1)
-                render_text(display_surface,font3,rank,(0,0,0),(115, 85+int(rank)*32))
+                render_text(display_surface,font3,rank,(0,0,0),(115, 75+int(rank)*32))
             j = 1
             for name,score in dicbod.items():
                 score = str(score)
-                render_text(display_surface,font3,name,(0,0,0),(350, 85+int(j)*32))
-                render_text(display_surface,font3,score,(0,0,0),(675, 85+int(j)*32))
+                render_text(display_surface,font3,name,(0,0,0),(350, 75+int(j)*32))
+                render_text(display_surface,font3,score,(0,0,0),(675, 75+int(j)*32))
                 j += 1
             if home2_button.draw(screen):
                 menu_state = "start"
@@ -245,14 +278,13 @@ def fuc_tutorial():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
-            render_text(display_surface,font1,"Scoreboard",(0,0,0),(300,35))
-            render_text(display_surface,font2,"Ranking",(0,0,0),(50, 85))
-            render_text(display_surface,font2,"Username",(0,0,0),(350, 85))
-            render_text(display_surface,font2,"Score",(0,0,0),(650, 85))
-            for rank in range(10):
-                rank = str(rank + 1)
-                render_text(display_surface,font3,rank,(0,0,0),(115, 85+int(rank)*32))
-            #for name,score in dicbod.items():
+            screen.blit(bg_img,(0,0))
+            render_text(display_surface,font1,"Tutorial",(0,0,0),(300,35))
+            render_text(display_surface,font35,"1.Enter your username, then press enter",(0,0,0),(50,135))
+            render_text(display_surface,font35,"2.Click start button",(0,0,0),(50,185))
+            render_text(display_surface,font35,"3.Type each word, then press Enter (the words are on screen)",(0,0,0),(50,235))
+            render_text(display_surface,font35,"4.You have only 60 seconds (1 word: 1 score point)",(0,0,0),(50,285))
+            render_text(display_surface,font35,"5.Type as much as you can",(0,0,0),(50,335))
 
             if home2_button.draw(screen):
                 menu_state = "start"
