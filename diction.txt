@@ -7,3 +7,5 @@ Anirach 15
 test1 2
 test2 2
 test 0
+user 0
+t 0

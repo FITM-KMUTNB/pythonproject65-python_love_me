@@ -15,7 +15,7 @@ font3 = pygame.font.Font("freesansbold.ttf", 24)
 font35 = font3 = pygame.font.Font("freesansbold.ttf", 22)
 font4 = pygame.font.Font("freesansbold.ttf", 18)
 TEXT_COL = (0, 0, 0)
-userinput = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((500,160),(300,50)),manager = MANAGER,object_id ='#username')
+userinput = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((500,50),(300,50)),manager = MANAGER,object_id ='#username')
 start_img = pygame.image.load("images/start.png").convert_alpha()
 tutorail_img = pygame.image.load("images/tutorail.png").convert_alpha()
 scoreboard_img = pygame.image.load('images/scoreboard.png').convert_alpha()
@@ -74,7 +74,7 @@ def fuc_start():
             UI_REFRESH_RATE = clock.tick(60)/1000
             screen.blit(bg_img,(0,0))
             render_text(display_surface,font1,"Typing Game",(0,0,0),(75,35))
-            render_text(display_surface,font4,"Enter username and press Enter",(0,0,0),(505,140))
+            render_text(display_surface,font4,"Enter username and press Enter",(0,0,0),(505,30))
             if start_button.draw(screen):
                 if username != '':
                     menu_state = 'game'
@@ -117,7 +117,7 @@ def fuc_game():
         pytime = pygame.time.get_ticks()/1000
         posi_y = 60
         while rungame:
-            countdown_timer = (40+pytime) - (pygame.time.get_ticks() / 1000)
+            countdown_timer = (4+pytime) - (pygame.time.get_ticks() / 1000)
             if float(countdown_timer) <= 0.00:#end game
                 display_surface.fill((255,255,255))
                 menu_state = 'end'
@@ -174,7 +174,7 @@ def fuc_end():
         display_surface.fill((255,255,255))
         while endrun:
             screen.blit(bg_img,(0,0))
-            render_text(display_surface,font1,"Game Over.",(0,0,0),(275,35))
+            render_text(display_surface,font1,"Game Over!!",(0,0,0),(275,35))
             render_text(display_surface,font2," Score :  {0} word per minute".format(success_count),(0,0,0),(175,125))
             render_text(display_surface,font2," Wrong :  {0} word".format(wrong_count),(0,0,0),(175,170))
             if restart_button.draw(screen):
