@@ -24,6 +24,12 @@ restart_img = pygame.image.load('images/restart.png').convert_alpha()
 home_img = pygame.image.load('images/home.png').convert_alpha()
 bg_img = pygame.image.load('images/back_ground.png')
 bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+bg1_img = pygame.image.load('images/bg_1.png')
+bg1_img = pygame.transform.scale(bg1_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+bg2_img = pygame.image.load('images/bg_2.png')
+bg2_img = pygame.transform.scale(bg2_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+bg3_img = pygame.image.load('images/bg_3.png')
+bg3_img = pygame.transform.scale(bg3_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
 start_button = button.Button(75, 150, start_img, 0.3)
 tutorail_button = button.Button(75, 250, tutorail_img, 0.3)
@@ -72,7 +78,7 @@ def fuc_start():
         display_surface.fill((255,255,255))
         while endrun:
             UI_REFRESH_RATE = clock.tick(60)/1000
-            screen.blit(bg_img,(0,0))
+            screen.blit(bg1_img,(0,0))
             render_text(display_surface,font1,"Typing Game",(0,0,0),(75,35))
             render_text(display_surface,font4,"Enter username and press Enter",(0,0,0),(505,30))
             if start_button.draw(screen):
@@ -117,14 +123,13 @@ def fuc_game():
         pytime = pygame.time.get_ticks()/1000
         posi_y = 60
         while rungame:
+            screen.blit(bg3_img,(0,0))
             countdown_timer = (60+pytime) - (pygame.time.get_ticks() / 1000)
             if float(countdown_timer) <= 0.00:#end game
-                display_surface.fill((255,255,255))
                 menu_state = 'end'
                 ended = True
                 rungame = False
             if not ended:
-                display_surface.fill((255,255,255))
                 if(pygame.time.get_ticks()-word_spawn_timer > 700):
                     word_spawn_timer = pygame.time.get_ticks()
                     release_wave(1,lines_read,words_on_screen,posi_y)
@@ -257,7 +262,7 @@ def fuc_scoreboard():
         endrun = True
         display_surface.fill((255,255,255))
         while endrun:
-            screen.blit(bg_img,(0,0))
+            screen.blit(bg2_img,(0,0))
             render_text(display_surface,font1,"Scoreboard",(0,0,0),(290,15))
             render_text(display_surface,font2,"Ranking",(0,0,0),(50, 75))
             render_text(display_surface,font2,"Username",(0,0,0),(325, 75))
