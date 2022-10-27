@@ -117,7 +117,7 @@ def fuc_game():
         pytime = pygame.time.get_ticks()/1000
         posi_y = 60
         while rungame:
-            countdown_timer = (4+pytime) - (pygame.time.get_ticks() / 1000)
+            countdown_timer = (60+pytime) - (pygame.time.get_ticks() / 1000)
             if float(countdown_timer) <= 0.00:#end game
                 display_surface.fill((255,255,255))
                 menu_state = 'end'
