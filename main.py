@@ -35,7 +35,7 @@ tutorail_button = button.Button(75, 250, tutorail_img, 0.3)
 scoreboard_button = button.Button(75, 350, scoreboard_img, 0.3)
 restart_button = button.Button(190, 250, restart_img, 0.33)
 home_button = button.Button(295, 325, home_img, 0.33)
-home2_button = button.Button(350,425, home_img, 0.33)
+home2_button = button.Button(335,428, home_img, 0.33)
 home3_button = button.Button(420,250, home_img, 0.33)
 
 success_count = 0
@@ -207,7 +207,10 @@ hilow = [0,1,2,3,4,5,6,7,8,9,10,
         83,84,85,86,87,88,89,90,
         91,92,93,94,95,96,97,98,
         99,100,101,102,103,104,105,
-        106]
+        106,107,108,109,110,111,
+        112,113,114,115,116,117,
+        118,119,120,121,122,123,
+        124,125,126,127,128,129]
 def write():
     filew = open('diction.txt','w')
     for name,score in dic.items():
@@ -263,17 +266,17 @@ def fuc_scoreboard():
         display_surface.fill((255,255,255))
         while endrun:
             screen.blit(bg2_img,(0,0))
-            render_text(display_surface,font1,"Scoreboard",(0,0,0),(290,15))
+            render_text(display_surface,font1,"Scoreboard",(0,0,0),(275,15))
             render_text(display_surface,font2,"Ranking",(0,0,0),(50, 75))
             render_text(display_surface,font2,"Username",(0,0,0),(325, 75))
             render_text(display_surface,font2,"Score",(0,0,0),(650, 75))
             for rank in range(10):
                 rank = str(rank + 1)
-                render_text(display_surface,font3,rank,(0,0,0),(115, 75+int(rank)*32))
+                render_text(display_surface,font3,rank,(0,0,0),(110, 75+int(rank)*32))
             j = 1
             for name,score in dicbod.items():
                 score = str(score)
-                render_text(display_surface,font3,name,(0,0,0),(350, 75+int(j)*32))
+                render_text(display_surface,font3,name,(0,0,0),(340, 75+int(j)*32))
                 render_text(display_surface,font3,score,(0,0,0),(675, 75+int(j)*32))
                 if j == 10:
                     break
@@ -297,13 +300,12 @@ def fuc_tutorial():
         display_surface.fill((255,255,255))
         while endrun:
             screen.blit(bg_img,(0,0))
-            render_text(display_surface,font1,"Tutorial",(0,0,0),(300,35))
-            render_text(display_surface,font35,"1.Enter your username, then press enter",(0,0,0),(50,135))
-            render_text(display_surface,font35,"2.Click start button",(0,0,0),(50,185))
-            render_text(display_surface,font35,"3.Type each word, then press Enter (the words are on screen)",(0,0,0),(50,235))
-            render_text(display_surface,font35,"4.You have only 60 seconds (1 word: 1 score point)",(0,0,0),(50,285))
-            render_text(display_surface,font35,"5.Type as much as you can",(0,0,0),(50,335))
-
+            render_text(display_surface,font1,"Tutorial",(0,0,0),(300,25))
+            render_text(display_surface,font35,"1.Enter your username, then press Enter for submit username.",(0,0,0),(50,115))
+            render_text(display_surface,font35,"2.Type each word, then press Enter for submit (Words are on screen).",(0,0,0),(50,165))
+            render_text(display_surface,font35,"3.You have only 60 seconds (1 word: 1 score point).",(0,0,0),(50,215))
+            render_text(display_surface,font35,"4.Type as much as you can. Input box is at bottom-left.",(0,0,0),(50,265))
+            render_text(display_surface,font35,"5.No need to type every words. Choose easy one.",(0,0,0),(50,315))
             if home2_button.draw(screen):
                 menu_state = "start"
                 endrun = False
