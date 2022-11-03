@@ -1,4 +1,0 @@
-Bot1 0
-Bot2 1
-Bot3 5
-Bot4 5
