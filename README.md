@@ -6,16 +6,16 @@ ProjectTemplate
 This project is creating typing game by using Python language.
 
 ## What are the libraries in the project?
--pygame
--pygame_gui 
+- pygame
+- pygame_gui 
 
 ## How to play game?
 You can open game by right click at file 'main.py' and click at 'Run Code'
 
 ## Authors
--Panuwat Klinsukhon
--Patcharaphon Koosomsarp
--Nattawat Phaungyeesun
--Phatkavee Keeratitragool
--Netiya Phurithatsiri
--Kainapat Suwannachote
+- Panuwat Klinsukhon
+- Patcharaphon Koosomsarp
+- Nattawat Phaungyeesun
+- Phatkavee Keeratitragool
+- Netiya Phurithatsiri
+- Kainapat Suwannachote
